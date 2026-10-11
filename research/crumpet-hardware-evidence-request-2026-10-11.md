@@ -36,3 +36,13 @@ The historical 4Gb `MX30LF4G28AD` raw main+OOB file has `131072 × 4352 = 570425
 - Research decision gates: [crumpet-root-strategy-decision-2026-10-11.md](../docs/crumpet-root-strategy-decision-2026-10-11.md)
 
 **Current facts:** the public `no-alexa/dumped_files/` folder contains `brhgptpl_0.bin` (196608 bytes), **not a publicly hosted full 570425344-byte NAND+OOB backup**. A separate 131072-byte BROM file is **not** NAND. Previously reported Crumpet preloader reads are not full NAND access. No validated DA2, restore, or root is claimed.
+
+## Outgoing requests sent 2026-10-11
+
+All three were **published from the `Manantra` GitHub account**, with the device kept unopened and no new tests requested:
+
+- [jvandewiel/no-alexa issue #5](https://github.com/jvandewiel/no-alexa/issues/5) — asked whether existing original full-chip Crumpet predecode NAND+OOB captures, geometry, independent reads and real restore evidence are still retained (no public private dumps).
+- [gilderchuck/mtk-nand-utils issue #1](https://github.com/gilderchuck/mtk-nand-utils/issues/1) — asked whether the originally tested MT8516B board was actually Crumpet, the source byte layout/BCH parameters, safe sample metadata and whether any restoration was validated.
+- [R0rt1z2/amonet-koboreru issue #2 comment](https://github.com/R0rt1z2/amonet-koboreru/issues/2#issuecomment-6108190362) — tagged `@schebli` and `@alessionot97` requesting **already-recorded** selected DA/EMI information, distinct DA1 ACK / DA2 status, USB connection timing and redacted logs.
+
+**Status:** Requests posted successfully; **no replies verified yet**. Receiving answers, hardware data or a genuine Root/Unlock is not implied. Review those threads before treating any claim as a new experiment result.
