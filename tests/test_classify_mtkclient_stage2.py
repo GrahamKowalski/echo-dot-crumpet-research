@@ -69,5 +69,41 @@ class DiagnosticTests(unittest.TestCase):
         self.assertTrue(flags["daemon_nand_info"])
 
 
+    def test_legacy_kamakiri_gpt_error_is_not_da2_status(self):
+        raw = ("[2026-10-11 12:00] All good\n"
+               "[2026-10-11 12:01] Check GPT\n"
+               "RuntimeError: read fail (got 0 of 512 bytes)\n")
+        flags, status, needs = classify(raw)
+        self.assertTrue(flags["legacy_kamakiri_gpt_probe"])
+        self.assertTrue(flags["legacy_kamakiri_read_failure"])
+        self.assertFalse(flags["stage2_status_exception"])
+        self.assertIn("NOT an MTKClient XFLASH DA2", status)
+        self.assertTrue(any("exact Kamakiri" in n for n in needs))
+
+    def test_legacy_marker_with_generic_read_fail(self):
+        flags, status, _ = classify("All good\nCheck GPT\nRuntimeError: read fail\n")
+        self.assertTrue(flags["legacy_kamakiri_read_failure"])
+        self.assertIn("GPT-phase", status)
+
+    def test_no_gpt_no_legacy_attribution(self):
+        flags, status, _ = classify("Kamakiri: All good\nRuntimeError: read fail\n")
+        self.assertFalse(flags["legacy_kamakiri_gpt_probe"])
+        self.assertIn("Insufficient", status)
+
+    def test_explicit_xflash_exception_takes_priority_when_mixed(self):
+        raw = STAGE2_TIMEOUT + "\nAll good\nCheck GPT\nRuntimeError: read fail\n"
+        flags, status, needs = classify(raw)
+        self.assertTrue(flags["legacy_kamakiri_gpt_probe"])
+        self.assertTrue(flags["stage2_status_exception"])
+        self.assertIn("No Stage-2 status response", status)
+        self.assertTrue(any("USB state" in n for n in needs))
+
+    def test_legacy_marker_without_failure_is_not_success(self):
+        flags, status, _ = classify("All good\nCheck GPT\n")
+        self.assertTrue(flags["legacy_kamakiri_gpt_probe"])
+        self.assertFalse(flags["stage2_boot_success"])
+        self.assertIn("not an MTKClient", status)
+
+
 if __name__ == "__main__":
     unittest.main()
