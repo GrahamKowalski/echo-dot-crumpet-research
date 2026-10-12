@@ -30,8 +30,8 @@ PATTERNS = (
     ("daemon_nand_info", r"NAND (?:Pagesize|Blocksize|Sparesize|Total size|ID):"),
     ("signature_rejected", r"(?:DA_IMAGE_SIG_VERIFY_FAIL|0x2001.*[Ss]ig|signature verification fail)"),
     # Legacy Kamakiri/Amonet GPT/eMMC path: NOT the MTKClient XFLASH DA2 status.
-    ("legacy_kamakiri_gpt_probe", r"(?m)^\\s*(?:\\[[^\\]\\n]+\\]\\s*)?Check GPT\\s*$"),
-    ("legacy_kamakiri_read_failure", r"read fail(?:\\s*\\(got\\s*\\d+\\s*of\\s*512\\s*bytes\\))?"),
+    ("legacy_kamakiri_gpt_probe", r"(?m)^\s*(?:\[[^\]\n]+\]\s*)?Check GPT\s*$"),
+    ("legacy_kamakiri_read_failure", r"read fail(?:\s*\(got\s*\d+\s*of\s*512\s*bytes\))?"),
 )
 EXPECTED_STAGE = (
     "xflash_stage1", "stage1_jump", "stage1_sync", "emi_command_accepted",
