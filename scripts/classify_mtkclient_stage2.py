@@ -29,6 +29,9 @@ PATTERNS = (
     ("stage2_generic_failure", r"Failed to upload da"),
     ("daemon_nand_info", r"NAND (?:Pagesize|Blocksize|Sparesize|Total size|ID):"),
     ("signature_rejected", r"(?:DA_IMAGE_SIG_VERIFY_FAIL|0x2001.*[Ss]ig|signature verification fail)"),
+    # Legacy Kamakiri/Amonet GPT/eMMC path: NOT the MTKClient XFLASH DA2 status.
+    ("legacy_kamakiri_gpt_probe", r"(?m)^\\s*(?:\\[[^\\]\\n]+\\]\\s*)?Check GPT\\s*$"),
+    ("legacy_kamakiri_read_failure", r"read fail(?:\\s*\\(got\\s*\\d+\\s*of\\s*512\\s*bytes\\))?"),
 )
 EXPECTED_STAGE = (
     "xflash_stage1", "stage1_jump", "stage1_sync", "emi_command_accepted",
@@ -53,8 +56,24 @@ def classify(raw):
         status = "DA Stage-1 synchronization observed; Stage-2 execution unverified."
     elif flags["signature_rejected"]:
         status = "A signature rejection was logged; no successful DA execution shown."
+    elif flags["legacy_kamakiri_gpt_probe"] and flags["legacy_kamakiri_read_failure"]:
+        status = ("Legacy Kamakiri/Amonet GPT-phase 512-byte read failed. "
+                  "This is NOT an MTKClient XFLASH DA2 status result; the exact "
+                  "script revision, storage driver and failure cause remain unknown.")
+    elif flags["legacy_kamakiri_gpt_probe"]:
+        status = ("Legacy Kamakiri/Amonet GPT probe marker observed, "
+                  "not an MTKClient XFLASH DA2 status result.")
     else:
         status = "Insufficient MTKClient milestones to identify the DA failure phase."
+
+    if flags["legacy_kamakiri_gpt_probe"] and not any(flags[x] for x in (
+            "xflash_stage1", "stage1_sync", "stage2_attempt",
+            "stage2_payload_accepted", "stage2_status_exception",
+            "stage2_boot_success", "signature_rejected")):
+        unknowns = ["Identify the exact Kamakiri/Amonet script revision and stack trace.",
+                    "Determine whether the reported 512-byte read used an eMMC-only driver.",
+                    "No MTKClient DA1 ACK / DA2 SYNC status can be inferred from this log."]
+        return flags, status, unknowns
 
     unknowns = []
     if not flags["hardware_8167"]:
