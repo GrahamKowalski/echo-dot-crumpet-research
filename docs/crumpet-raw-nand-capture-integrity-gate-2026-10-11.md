@@ -64,3 +64,11 @@ This is a **quality gate**, not an exploit. It addresses a practical blocker tha
 On research machine `hermes`, a fresh checkout passed **250/250** offline unit tests on 2026-10-11. An independent one-off read-only `bchlib` initialization confirmed the upstream 4-chunk parameter result `56 ECC bytes`. These tests prove only the checker behavior, **not** a Crumpet NAND read or validated restore.
 
 **Decision:** Keep DA2 on evidence-gated hold. The highest-value next missing ingredient is **two independent real-device main+spare captures and an independently demonstrated, safe sacrificial-board recovery**; without this, no downgrade, NAND flash, eFuse, custom LK or TEE writes are justified.
+
+## Addendum — 2026-10-14: original raw data reportedly retained
+
+In [no-alexa issue #5](https://github.com/jvandewiel/no-alexa/issues/5#issuecomment-6141779362), Joost van de Wiel reported keeping approximately 132000 original page files of around 4.4 KB; he recalls 2–3 reads/page compared **before** saving and says a decoded image exists. The readable/mountable conversion attributed to gilderchuck is a second-hand report in this reply, **not independently reproduced here**. Crucially, Joost explicitly reports **no physical NAND writeback or cold boot after restoration**.
+
+His historical notes say `4532 (4096 + 256)` bytes per page, while both `4096 + 256` and `4 × 1088` yield **4352**. This is an **unresolved source discrepancy**, not evidence that existing page files match the decoder's assumed input layout. The approximate page count is also not independently reconciled with the historical 131072-page geometry. There are no shared independently hashed full raw captures, ECC/OOB/BBT validation outcomes or a sanitized reproduction fixture to close the recovery gate. Retained *raw pages* are promising but still not a *verified restorable raw image*.
+
+**No change to the safety decision:** work only with pre-existing consented/sanitized metadata or synthetic inputs; do not acquire new unsafe captures, write/erase NAND or attempt hardware restoration to fill these gaps. Full [October 14 source comparison and evidence levels](crumpet-community-evidence-update-2026-10-14.md).

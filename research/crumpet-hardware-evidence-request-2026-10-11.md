@@ -45,4 +45,13 @@ All three were **published from the `Manantra` GitHub account**, with the device
 - [gilderchuck/mtk-nand-utils issue #1](https://github.com/gilderchuck/mtk-nand-utils/issues/1) — asked whether the originally tested MT8516B board was actually Crumpet, the source byte layout/BCH parameters, safe sample metadata and whether any restoration was validated.
 - [R0rt1z2/amonet-koboreru issue #2 comment](https://github.com/R0rt1z2/amonet-koboreru/issues/2#issuecomment-6108190362) — tagged `@schebli` and `@alessionot97` requesting **already-recorded** selected DA/EMI information, distinct DA1 ACK / DA2 status, USB connection timing and redacted logs.
 
-**Status:** Requests posted successfully; **no replies verified yet**. Receiving answers, hardware data or a genuine Root/Unlock is not implied. Review those threads before treating any claim as a new experiment result.
+**Historical status on 2026-10-11:** Requests posted; no replies verified **at that time**. This is not the current thread status.
+
+## Read-only follow-up (checked 2026-10-14)
+
+- **[no-alexa #5: reply on 2026-10-13](https://github.com/jvandewiel/no-alexa/issues/5#issuecomment-6141779362):** The owner says original raw files remain (~132000 files, ~4.4 KB each), 2–3 reads/page were compared before saving, and a decoded image exists. He attributes a readable/mountable conversion to gilderchuck. **He did not write the NAND back or validate a cold boot.** These are community reports, not independently verified captures.
+- **Page-size inconsistency:** The reply says `4532 (4096 + 256)` bytes while 4096 + 256 and 4 × 1088 both equal **4352**. Keep exact saved file lengths and byte layout **open** pending non-sensitive original metadata. The historical 131072-page expectation is not verified by an approximate ~132000-file report.
+- **[mtk-nand-utils #1](https://github.com/gilderchuck/mtk-nand-utils/issues/1):** no substantive reply verified.
+- **[amonet-koboreru #2](https://github.com/R0rt1z2/amonet-koboreru/issues/2):** no new exact-session DA2 evidence; Oct 11 recovered Kamakiri notes were separately analyzed in [the read-only protocol report](../docs/crumpet-kamakiri-gpt-read-vs-mtkclient-da2-2026-10-12.md). The maintainer explicitly requests no AI-generated comments or issues. **Do not contact him via generated contributions.**
+
+The earlier evidence request remains a historical record, **not** a renewed request to acquire private dumps or perform physical experiments. See the [full Oct 14 evidence update](../docs/crumpet-community-evidence-update-2026-10-14.md).

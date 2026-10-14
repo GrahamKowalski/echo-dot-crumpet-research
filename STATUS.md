@@ -1,10 +1,16 @@
-# Research status — 2026-10-11
+# Research status — 2026-10-14
 
 **No proven persistent unlock, root or TWRP for Crumpet (C78MP8).** This repository is research, not a flash guide.
+
+**October 14 evidence update:** [documented NAND-owner testimony and upstream Amonet commit comparison](docs/crumpet-community-evidence-update-2026-10-14.md). New community-reported raw pages and a decoded image do **not** establish independent raw integrity, physical restore or root. The maintainer reports active support work, but there is no publicly verified C78MP8 implementation. This status supplement does not supersede SHA-pinned older static audits.
 
 | Topic | Evidence level | Status |
 |---|---|---|
 | Raw NAND storage | Documented in 2019 Crumpet logs | Confirmed for logged hardware |
+| Original physical readback retained (Oct 13 report) | [Owner testimony](https://github.com/jvandewiel/no-alexa/issues/5#issuecomment-6141779362): ~132000 page files ~4.4 KB, 2–3 readings/page before save | **Reported only**; independently saved two full captures, hashes, ECC/OOB and complete page geometry unverified |
+| Decoded/mountable image (Oct 13 report) | Same owner's report; mountability attributed second-hand to gilderchuck | **Reported, not independently reproduced**; **no NAND writeback/cold-boot** |
+| Upstream Amonet Oct 13 changes | [8-commit compare](https://github.com/R0rt1z2/amonet-koboreru/compare/2a28fd0...da2070f) and unchanged Crumpet header | General tooling/platform changes; **no proven C78MP8 fix**, no releases, only `main` |
+| Upstream maintainer current intent | [Oct 11 statement](https://github.com/R0rt1z2/amonet-koboreru/issues/2#issuecomment-6108392942) | **Actively working** (self-reported); **not** equivalent to working root/unlock |
 | Preloader 2019: `20190926_190455` | Public NAND excerpt and UART logs | Verified source material |
 | Preloader 2021: `20210326_040236` | Original official OTA extracted; per-image SHA-256 verified against payload manifest | **Confirmed binary evidence** |
 | Catalogued latest 2025 Crumpet OTA boot image | Official 2025-11-28 Fire OS 6.5.7.1, CrAU manifest SHA-256 verified | **LK bit-identical to 2024/2025 earlier LK**; GFH-anchored `brhgptpl_0` span `[0x8000,0x2D000)` identical in May/July/Oct/Nov 2025, despite variable 0x0–0x8000 NAND prefix |

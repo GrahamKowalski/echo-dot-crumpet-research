@@ -1,7 +1,14 @@
 # Primary sources and attribution
 
+- [2026-10-14 consolidated Crumpet NAND/community and Amonet source update](../docs/crumpet-community-evidence-update-2026-10-14.md) — evidence grades, geometry discrepancy and pinned eight-commit comparison.
+- [2026-10-13 Joost van de Wiel NAND-owner response](https://github.com/jvandewiel/no-alexa/issues/5#issuecomment-6141779362) — retained raw pages, repeated acquisition observations and decoded image **reported**, no writeback; not independently validated.
+- [Upstream Amonet Oct 2026 commit range](https://github.com/R0rt1z2/amonet-koboreru/compare/2a28fd0...da2070f) — eight commits through Oct 13, general code/build changes; [current Crumpet header](https://github.com/R0rt1z2/amonet-koboreru/blob/da2070f/include/devices/crumpet.h) remains identical to [base](https://github.com/R0rt1z2/amonet-koboreru/blob/2a28fd0/include/devices/crumpet.h).
+- [Maintainer's 2026-10-11 active-work announcement and no-AI-response request](https://github.com/R0rt1z2/amonet-koboreru/issues/2#issuecomment-6108392942) — intent/status, not a successful Crumpet build/test.
+- [Existing unanswered decoder issue #1](https://github.com/gilderchuck/mtk-nand-utils/issues/1) — no separate restoration proof as of 2026-10-14.
+
+
 - [R0rt1z2/amonet-koboreru](https://github.com/R0rt1z2/amonet-koboreru) — exploit source, **untested** Crumpet support.
-- [Crumpet patch source](https://github.com/R0rt1z2/amonet-koboreru/blob/main/devices/crumpet.c).
+- [Crumpet device configuration header (current upstream)](https://github.com/R0rt1z2/amonet-koboreru/blob/main/include/devices/crumpet.h) — `PLATFORM mt8516`, hardcoded patch addresses and `LK_PART_NAME "expdb"`; compared byte-for-byte against `2a28fd0`.
 - [Verified 2026 DA1 mutable handoff field writes and independent Crumpet unlock-status review](../docs/crumpet-da1-mutable-state-and-october-2026-unlock-status.md) — pinned original V5/AllInOne Thumb xrefs plus dated third-party assessment.
 - [SHA-pinned DA1 mutable state field audit](../scripts/audit_da1_mutable_argument_sources.py) — direct original `STR` and PC-relative source references; no device interaction.
 - [Gamer92000/echo-dot-assist](https://github.com/Gamer92000/echo-dot-assist) — original 2026 maintained support table lists C78MP8 as unsupported, unlike D9N29T.

@@ -6,6 +6,10 @@ Public, community-oriented **read-only reverse-engineering research** for the Am
 
 ## What is known
 
+- **2026-10-14 community/source update:** [Joost reports retained raw NAND pages and a decoded image](https://github.com/jvandewiel/no-alexa/issues/5#issuecomment-6141779362), but exact 4352/4532-byte page geometry, capture provenance, ECC/BBT and physical restore remain unverified. See [evidence and uncertainty review](docs/crumpet-community-evidence-update-2026-10-14.md).
+- **2026-10-13 Amonet updates:** eight commits since pinned `2a28fd0` add general build/platform functionality, but `include/devices/crumpet.h` is byte-identical at new `da2070f`. **No working Crumpet root, unlock or recovery is demonstrated.** [Versioned source diff and limits](docs/crumpet-community-evidence-update-2026-10-14.md#2-amonet-koboreru-2a28fd0da2070f-2026-10-11-to-2026-10-13).
+
+
 - **New (2026-10-11): confirmed DA1 mutable state and independent C78MP8 status.** In pinned V5 and AllInOne DA1 binaries, the second **56/32-byte** parameter source is a **runtime-written table**, not a fixed firmware literal: V5 has **16 static address occurrences and six verified field-write instructions**; AllInOne has **10 occurrences and four verified field writes**. Values are not observable without a real device trace, so their involvement in Crumpet DA2 failure remains a hypothesis. The [new DA1 field-level investigation](docs/crumpet-da1-mutable-state-and-october-2026-unlock-status.md) also cross-checks [an independent October 3 Crumpet analysis](https://community.home-assistant.io/t/echo-dot-3rd-gen-2018-as-a-fully-local-assist-satellite-keeping-amazons-mic-array-and-wake-word-engine/1025971/36) and the [current echo-dot-assist supported device list](https://github.com/Gamer92000/echo-dot-assist): **donut D9N29T supported; crumpet C78MP8 explicitly unsupported**. No verified persistent root/unlock.
 
 
@@ -37,7 +41,7 @@ Public, community-oriented **read-only reverse-engineering research** for the Am
 - **Key SRAM protection finding:** newer preloader builds guard BSS `[0x00102180, 0x00109DAC)`, which **contains the published payload's block-device target `0x001086EC`**. A hypothetical copy matching the payload's effective zero destination and size `0x00108804` intersects this protected region, so the new guard would reject it *if passed the actual copy address and size*. [Verified boundaries and conditional analysis](docs/sram-guard-exploit-intersection.md).
 - **ARM analysis:** The 2022 preloader range checks and the 2023/2024-era rewritten text/BSS guards have been disassembled, with confirmed literal cross-references and calls. [Code analysis](docs/arm-range-check-analysis.md). This does not establish exploitable behaviour.
 - **2023 build now obtained:** the exact Crumpet build string `20231103_072325` appears in preloader images verified from official 2025 OTAs. The image's full hash differs from a community device dump, so bitwise equivalence is **not** claimed. [Verified version timeline](docs/verified-preloader-timeline.md).
-- [`amonet-koboreru`](https://github.com/R0rt1z2/amonet-koboreru) has Crumpet-specific code; its maintainer says the NAND port has **not been tested on real hardware** and is on hold.
+- [`amonet-koboreru`](https://github.com/R0rt1z2/amonet-koboreru) has Crumpet-specific code; its maintainer previously warned the raw-NAND port was untested/on hold, then on **2026-10-11** [said he was actively working on support](https://github.com/R0rt1z2/amonet-koboreru/issues/2#issuecomment-6108392942). **No functioning C78MP8 port has been demonstrated.**
 - A [TWRP device tree](https://github.com/R0rt1z2/twrp_device_amazon_echo-mt8167) exists, but a working Crumpet recovery is **not demonstrated**.
 
 ## Where to start
