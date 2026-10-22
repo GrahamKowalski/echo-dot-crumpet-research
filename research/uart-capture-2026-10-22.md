@@ -1,11 +1,11 @@
-# Owner UART capture, 2026-10-22
+# UART capture, 2026-10-22
 
 ## Capture conditions (observed)
 
-- One owner-supplied unit (C78MP8), passive read only: adapter GND and adapter RX connected, adapter TX and VCC unconnected. FTDI FT232R adapter (DSD TECH SH-U09C5) set to 1.8 V logic. GND went to the gold ring pad under one of the board mounting screws.
+- I did a passive read on one unit (C78MP8). Only the adapter's GND and RX were connected; TX and VCC were left unconnected. The adapter is an FTDI FT232R (DSD TECH SH-U09C5), set to 1.8 V logic. GND went to the gold ring pad under one of the board mounting screws.
 - Signal found on pad **TM45** on the bottom (pad) side of the half-disc board `30-004397 REV 01`, at 1.8 V idle (meter: 1.825 V). TM44 read a steady 2.044 V. TM44 was tried at 3.3 V (115200 baud) and again at 1.8 V (115200 and 921600 baud). The two 1.8 V logs hold only 1 and 3 stray NUL bytes after the PuTTY header, with no readable text. The 921600 attempt was logged across a power cycle; for the 115200 attempt that is not recorded.
-- Powered by plugging in the supply; no button was pressed. The log nonetheless reports `Power key boot` and `power key is pressed` (also `No Battery`).
-- Captured with PuTTY 0.85 serial logging at 115200 8N1 and 921600 8N1. The 921600 capture was roughly the third or fourth boot the owner watched; only this one capture at each rate was kept, so repeatability across saved captures is not shown.
+- I powered the unit by plugging in the supply and pressed no button. The log nonetheless reports `Power key boot` and `power key is pressed` (also `No Battery`).
+- I captured with PuTTY 0.85 serial logging at 115200 8N1 and 921600 8N1. The 921600 capture was roughly my third or fourth boot of the unit; I kept only this one capture at each rate, so repeatability across saved captures is not shown.
 - The 115200 capture shows readable BootROM output (`F0:`…`Jump to BL`, 11 lines) and then garbage. The 921600 capture is readable from the preloader's first banner (a few bytes of garbage precede it) to `console [ttyMT0] enabled`, about 960 lines.
 - Pad function is now **observed on this unit** (UART TX on TM45 at 1.8 V, 921600 after the BootROM). It contradicts the third-party wiki's TM44 = TX / TM45 = RX labelling in [hardware.md](../docs/hardware.md).
 

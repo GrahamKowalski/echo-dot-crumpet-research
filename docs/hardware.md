@@ -12,7 +12,7 @@ These observations apply to the specifically logged hardware; other revisions mu
 
 ## Board photos and silkscreen labels (2026-10-20)
 
-**Observed.** One owner-supplied unit, photographed under a microscope camera (77 overlapping frames stitched into one image; the stitch is a map, not a measurement, and a few labels near tall parts are slightly smeared). Only the stitched and ID-label-masked images are published, not the individual frames.
+**Observed.** I photographed one unit under a microscope camera (77 overlapping frames stitched into one image; the stitch is a map, not a measurement, and a few labels near tall parts are slightly smeared). Only the stitched and ID-label-masked images are published, not the individual frames.
 
 ![Stitched microscope view of the bottom (pad side) of the half-disc board](images/crumpet-half-disc-board-bottom-2026-10.jpg)
 
