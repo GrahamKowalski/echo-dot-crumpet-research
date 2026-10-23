@@ -38,10 +38,48 @@ This unit has at least two boards. The labels above are from the half-disc board
 
 **UART, observed on this unit (2026-10-22).** With a USB-serial adapter set to 1.8 V logic, its RX wired to pad **TM45** on the pad side of the half-disc board (`30-004397 REV 01`), and its GND wired to the gold ring pad under one of the board's mounting screws (a ground connection), the unit printed its boot log on power-up. BootROM lines appear at 115200 baud and the preloader onward at 921600 (8N1). TM45 idles at about 1.825 V.
 
-- TM44 read a steady 2.044 V. Attempts on TM44 at 3.3 V (115200 baud) and then at 1.8 V (115200 and 921600 baud) captured no readable output, only a few stray zero bytes. The 921600 attempt was logged across a power cycle; whether the 115200 attempt was is not recorded. TM44 was not seen transmitting on this unit.
+- TM44 read 2.044 V on an earlier check and 1.819 V when measured again 3 to 5 minutes after boot (see the table below). Attempts on TM44 at 3.3 V (115200 baud) and then at 1.8 V (115200 and 921600 baud) captured no readable output, only a few stray zero bytes. The 921600 attempt was logged across a power cycle; whether the 115200 attempt was is not recorded. TM44 was not seen transmitting on this unit.
 - The adapter's TX was never connected, so whether either pad accepts input is untested.
 - Pad numbers repeat across the two boards, so this applies to TM45 on the half-disc board only.
 
-Other sources differ: the no-alexa wiki "Interfacing" page (third-party reported, edited 2021-09-29, device revision not stated) lists UART0 on "TM44/TM45" on the main logic board, with TM44 as TX and TM45 as RX, and USB on TM4/TM5. On this unit TM45 is the pad that transmits. An unattributed summary gave TX at TM59 (TM45 on some revisions), GND at TM3 and 1.8 V at TM5/TM6; no source for that was found. This unit agrees with it on TM45 and 1.8 V; TM3 as ground was not tested.
+Other sources differ: the no-alexa wiki "Interfacing" page (third-party reported, edited 2021-09-29, device revision not stated) lists UART0 on "TM44/TM45" on the main logic board, with TM44 as TX and TM45 as RX, and USB on TM4/TM5. On this unit TM45 is the pad that transmits. An unattributed summary gave TX at TM59 (TM45 on some revisions), GND at TM3 and 1.8 V at TM5/TM6; no source for that was found. This unit agrees with it on TM45 and 1.8 V, and TM3 is continuous with the ground pad when the unit is off (table below).
+
+### Multimeter readings on the pad side of the half-disc board (2026-10-22)
+
+**Observed**, not traced: nothing here establishes what any pad does. Meter: Mestek CM81 (true RMS), needle probes. Powered readings: unit idle, 3 to 5 minutes after boot, measured against the gold ring pad under a mounting screw. Off readings: supply unplugged. A dash means not recorded.
+
+| Pad | Powered (V) | Continuous with GND, off | Off: resistance to GND and notes |
+|---|---|---|---|
+| TM1 | 0 | yes | 0 Ω |
+| TM3 | 0 | yes | - |
+| TM4 | 1.0 | - | - |
+| TM5 | 1.1 to 1.2, bouncing | - | - |
+| TM6 | 1.821 | - | - |
+| TM33 | 0 | yes | - |
+| TM35 | 3.845 to 3.850, drifting slowly | - | - |
+| TM36 | 1.357 | - | - |
+| TM37 | 1.82 | no | - |
+| TM38 | 3.34 | - | - |
+| TM39 | 1.2 | - | - |
+| TM40 | 1.143 | - | - |
+| TM41 | 2.206 | - | - |
+| TM42 | 2.831 | - | - |
+| TM43 | 1.822 | - | - |
+| TM44 | 1.819 | - | 13.8 kΩ, steady |
+| TM45 | 1.825 | - | 13.7 kΩ, steady |
+| TM50 | 0.00 | no | about 1.0 kΩ, steady |
+| TM51 | 12.22 | - | 0 Ω to TM52 |
+| TM52 | 12.25 | no | 0 Ω to TM51 |
+| TM53 | 0.21 | yes | 0 Ω |
+| TM54 | 1.823 | - | - |
+| TM55 | 0.21 | - | - |
+| TM56 | 1.778 | - | - |
+| TM57 | 0 | no | not stable: began near 15 kΩ and rose past 30 kΩ over about 5 s; later about 100 kΩ and falling |
+| TM58 | 0 | no | not stable: same rising behaviour as TM57 |
+
+- TM51 and TM52 are the same net (0 Ω) at about 12 V, which fits the supply input. Treat both as hazardous.
+- TM53 and TM55 read 0.21 V while TM53 is 0 Ω to ground when off. I don't know why.
+- Resistance that drifts while being measured (TM57, TM58) is typical of measuring across capacitance, so no single value is given.
+- The meter itself applies a small voltage when measuring ohms, and pad readings can shift with probe contact.
 
 As with the logs above, these observations apply to this unit only; other revisions must be checked independently.
