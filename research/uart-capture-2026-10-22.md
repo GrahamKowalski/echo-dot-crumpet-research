@@ -47,6 +47,8 @@
 - The log does not show how the BootROM or preloader responds to a host tool on UART or USB. Only the timeout is visible.
 - Nothing here shows DA1 or DA2 behaviour.
 
+USB observations from the same unit, made on 2026-10-23 and 2026-10-24, are in [usb-preloader-capture-2026-10-24.md](usb-preloader-capture-2026-10-24.md).
+
 ## Handling
 
 - The raw logs contain hardware identifiers (MEID, hwuid, HRID) and lastpc values. Keep them out of the repo.

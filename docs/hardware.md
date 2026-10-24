@@ -82,4 +82,8 @@ Other sources differ: the no-alexa wiki "Interfacing" page (third-party reported
 - Resistance that drifts while being measured (TM57, TM58) is typical of measuring across capacitance, so no single value is given.
 - The meter itself applies a small voltage when measuring ohms, and pad readings can shift with probe contact.
 
+### USB pads TM4 and TM5 (observed on this unit, 2026-10-23 and 2026-10-24)
+
+With a USB cable's white wire on TM4 and green wire on TM5, VBUS not connected, and the link held to full speed, the preloader enumerates as `0e8d:2000`, MediaTek "MT65xx Preloader", a CDC-ACM device with no serial string. The reverse arrangement does not work: the host classifies the device as low-speed. So on this unit TM4 behaves as D− and TM5 as D+, the opposite of the wiki's labelling. This assumes the cable colours are standard. At high speed enumeration failed on my wiring, so I had to cap the link at 12 Mbit/s. Details and limits are in the [USB capture note](../research/usb-preloader-capture-2026-10-24.md).
+
 As with the logs above, these observations apply to this unit only; other revisions must be checked independently.
