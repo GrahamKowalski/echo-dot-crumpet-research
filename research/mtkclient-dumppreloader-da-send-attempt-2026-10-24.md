@@ -27,12 +27,19 @@ Disconnecting USB and power cycling after a session like this produces a normal 
 
 This repo's existing docs on DA1/DA2 handoff and DA2 Stage 2 failure are built on static disassembly and host side source review, explicitly without a real device trace. This is, as far as I can tell, the first entry in this project with an actual live attempt against real hardware along those lines, and an actual device reported status code in response, rather than silence, a timeout, or a hypothesis. `DA_INVALID_LENGTH` is a specific, named status, not an unexplained short read, and it was returned before any payload content was exchanged. I think that is worth recording precisely, without claiming it explains or resolves this project's broader DA2 questions, which remain open, and without treating a rejected crash attempt as progress toward anything.
 
+## Mode variation follow-up, 2026-10-24
+
+mtkclient's crash technique accepts a `--mode` flag (`0=dasend1, 1=dasend2, 2=daread`). I tried all three against this unit. Every mode sent the exact same header, command `d7`, address `00000000`, length `00000100`, byte for byte identical across default mode, mode 1, and mode 2, and every one was rejected with the same `DA_INVALID_LENGTH (0x7004)` status. No dump file was created in any mode. I confirmed full recovery with a UART capture after each session.
+
+I don't think `--mode` changes anything about this specific crash path on this device. Three independent confirmations of byte for byte identical requests and identical rejections is enough to call this settled, not worth testing further variations of the same technique.
+
 ## Not established
 
 - Why the device's chosen length value for this technique was rejected, or what length or technique it would accept, if any. I did not try to find out.
 - Whether `DA_INVALID_LENGTH` here is the same underlying cause as this project's existing DA2/XFLASH short read hypotheses, or a separate issue.
 - Anything about flash contents. No flash read or write of any kind occurred, and nothing was ever successfully dumped.
 - Whether a genuine, signed DA transfer, as opposed to this crash technique, would behave differently. I did not attempt one.
+- Whether a different, named exploit payload type (`amonet`, `kamakiri`, `kamakiri2`, `carbonara`) would behave differently. `--ptype` had no effect on this command specifically, since `dumppreloader` runs its own fixed crash technique regardless of that flag; the commands that actually honour `--ptype` are covered separately in [mtkclient-plstage-carbonara-attempt-2026-10-24.md](mtkclient-plstage-carbonara-attempt-2026-10-24.md).
 
 ## Handling
 
