@@ -39,7 +39,7 @@ I don't think `--mode` changes anything about this specific crash path on this d
 - Whether `DA_INVALID_LENGTH` here is the same underlying cause as this project's existing DA2/XFLASH short read hypotheses, or a separate issue.
 - Anything about flash contents. No flash read or write of any kind occurred, and nothing was ever successfully dumped.
 - Whether a genuine, signed DA transfer, as opposed to this crash technique, would behave differently. I did not attempt one.
-- Whether a different, named exploit payload type (`amonet`, `kamakiri`, `kamakiri2`, `carbonara`) would behave differently. `--ptype` had no effect on this command specifically, since `dumppreloader` runs its own fixed crash technique regardless of that flag; the commands that actually honour `--ptype` are covered separately in [mtkclient-plstage-carbonara-attempt-2026-10-24.md](mtkclient-plstage-carbonara-attempt-2026-10-24.md).
+- Whether a different, named exploit payload type (`amonet`, `kamakiri`, `kamakiri2`, `carbonara`) would behave differently through this command path. A fork testing follow-up in [mtkclient-fork-crash-modes-0-3-attempt-2026-10-24.md](mtkclient-fork-crash-modes-0-3-attempt-2026-10-24.md) ran `dumppreloader --skipwdt --ptype carbonara` with a fixed dispatch and confirmed that the named exploit's `dump_preloader()` method is an uninstrumented stub that returns immediately; the blocker remains the crash step, not the dispatch. The commands that actually honour `--ptype` for a preloader-mode technique in the upstream tool are covered in [mtkclient-plstage-carbonara-attempt-2026-10-24.md](mtkclient-plstage-carbonara-attempt-2026-10-24.md).
 
 ## Handling
 
