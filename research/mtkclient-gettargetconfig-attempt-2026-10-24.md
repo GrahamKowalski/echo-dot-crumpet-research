@@ -59,7 +59,7 @@ Disconnecting USB and power cycling the unit after a `--skipwdt` session produce
 
 - Why the board's own boot process stalls after mtkclient's session ends, even though mtkclient itself completed successfully.
 - Which of the two conflicting SBC values, if either, reflects the device's actual enforcement state.
-- Anything about DA1, DA2, flash, or exploit payloads. `gettargetconfig` is still the only command run.
+- Anything about DA1, DA2, flash, or exploit payloads from this command. `gettargetconfig` is still the only command run here; a separate follow-up with `dumppreloader`, which does reach the DA layer, is recorded in [mtkclient-dumppreloader-da-send-attempt-2026-10-24.md](mtkclient-dumppreloader-da-send-attempt-2026-10-24.md).
 
 ## Handling
 
