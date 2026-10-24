@@ -56,7 +56,7 @@ With a successful enumeration the preloader then logs `usb listen timeout` and `
 - The cable colours and the polarity inference above, as described.
 - This is one unit and one preloader build.
 - Both Raspberry Pis reported under-voltage during testing. The results were consistent across cycles, but I can't rule out an effect.
-- **Nothing was sent to the board.** What the preloader does in its handshake window when a host tool talks to it is untested here.
+- **Nothing was sent to the board in this note.** A follow-up active test, which did send real commands over this same connection, is recorded separately in [mtkclient-gettargetconfig-attempt-2026-10-24.md](mtkclient-gettargetconfig-attempt-2026-10-24.md).
 - Why high speed fails on my wiring.
 
 ## Handling
