@@ -36,6 +36,31 @@ This repo's existing docs (STATUS.md, [mtkclient-stage2-nand-profile-transport.m
 - Whether the watchdog-disable write had any effect before failing to acknowledge.
 - Everything past this one command. `gettargetconfig` was the only command run.
 
+## Follow-up: --skipwdt, 2026-10-24
+
+The failure above happens inside mtkclient's generic `preloader.init()` step, before any command specific logic runs. I know that directly from mtkclient's own crash traceback in the first attempt, not from reading its source separately. mtkclient's own `--help` output lists `--skipwdt`, "Skip wdt init", built for exactly this. I reran `gettargetconfig --skipwdt --debugmode` across 4 more power cycles that caught the device.
+
+### What happened (observed, identical across all 4 attempts)
+
+- The handshake and identification steps completed the same as before.
+- mtkclient additionally read back `HW subcode: 0x8a00`, `HW Ver: 0xcb00`, `SW Ver: 1`. These match the values this repo's STATUS.md already records as a third party community report, now independently confirmed from a live session on this unit.
+- The actual `gettargetconfig` read completed, and mtkclient exited cleanly, exit code 0, every time. It reported `Target config: 0x0`, with SBC, SLA, DAA, SWJTAG, EPP_PARAM, root cert required, mem read auth, mem write auth, and the cmd 0xC8 block all read back `False`.
+
+### An important caveat, not a clean fix
+
+- Despite mtkclient completing cleanly, the board's own UART log in all 4 of these same boots shows 31 `USB_HANDSHAKE`/`usb receive timeout` lines each, and does not reach the later boot stages within the capture window. No `sec params` lines, no LED ring init, no kernel console, no `BOOT_TIME` line. Skipping the watchdog write let mtkclient's own exchange finish, but the board's boot process still appears to stall afterward. I don't understand that interaction, and I'm recording it, not explaining it.
+- The `SBC enabled: False` read directly conflicts with the preloader's own boot time self report, `sec params sbc_enabled = 1`, present on every capture in this project, including every baseline capture with no USB tool attached at all. I'm recording this conflict, not resolving it. I don't know which value reflects the device's actual enforcement state, or whether `gettargetconfig` even reads the same thing that boot time line reports. **This is not an unlock finding.**
+
+### Recovery (observed, confirmed with a UART capture of the recovery boot itself)
+
+Disconnecting USB and power cycling the unit after a `--skipwdt` session produces a completely normal boot: `BOOT_TIME: 1340`, `sec params sbc_enabled = 1`, `sec params prod_dev = 1`, `Detect production device: True`, LED ring, LK finished, kernel console enabled, zero `USB_HANDSHAKE` or timeout lines.
+
+### Not established (follow-up)
+
+- Why the board's own boot process stalls after mtkclient's session ends, even though mtkclient itself completed successfully.
+- Which of the two conflicting SBC values, if either, reflects the device's actual enforcement state.
+- Anything about DA1, DA2, flash, or exploit payloads. `gettargetconfig` is still the only command run.
+
 ## Handling
 
 No DA, certificate, or device-specific key material was used or produced. The hex bytes and register values recorded above came from mtkclient's own live session output, not from its source code. Raw debug logs, UART logs, and watcher output are not included here, for the same reasons as the earlier capture note.
